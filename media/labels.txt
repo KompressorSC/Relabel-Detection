@@ -1,0 +1,6 @@
+take
+place
+check
+tape
+DP
+TR

@@ -1,0 +1,10 @@
+names:
+- take
+- place
+- check
+- tape
+- DP
+- TR
+nc: 6
+train: C:\WORK\Relabel_Detection\media\2024_05_29_08_19_59\train
+val: C:\WORK\Relabel_Detection\media\2024_05_29_08_19_59\val

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Sicheng Chen" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>实时画面</title>
+    <link href="{% static 'styles/live.css' %}" rel="stylesheet">
+    <script src="{% static 'scripts/live.js' %}"></script>
+</head>
+
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a href="{% url 'Relabel_Detection:main' %}">主页</a></li>
+                <li><a>实时</a></li>
+                <li><a href="{% url 'Relabel_Detection:history' %}">历史</a></li>
+                <li><a href="{% url 'Relabel_Detection:settings' %}">设置</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                    <form action="{% url 'Relabel_Detection:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="logout" type="submit">登出</button>
+                    </form>
+                    {% else %}
+                    <form action="{% url 'Relabel_Detection:login' %}" method="post">
+                        {% csrf_token %}
+                        <button class="login" type="submit">登录</button>
+                    </form>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <img id="live" src="{% url 'Relabel_Detection:video' %}">
+        <div id="interact">
+            <button class="capture" onclick="capture()">截图</button>
+            <img id="screenshot">
+            <button class="delete" onclick="delete_capture()">删除</button>
+        </div>
+    </main>
+</body>
+
+</html>

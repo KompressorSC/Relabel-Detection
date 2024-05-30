@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Sicheng Chen" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>登录</title>
+    <link href="{% static 'styles/login.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a href="{% url 'Relabel_Detection:main' %}">主页</a></li>
+                <li><a href="{% url 'Relabel_Detection:live' %}">实时</a></li>
+                <li><a href="{% url 'Relabel_Detection:history' %}">历史</a></li>
+                <li><a href="{% url 'Relabel_Detection:settings' %}">设置</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">登录</button>
+            </form>
+            {% if form.errors %}
+            <p>用户名或密码不正确。请重试。</p>
+            {% endif %}
+        </div>
+    </main>
+</body>
+
+</html>

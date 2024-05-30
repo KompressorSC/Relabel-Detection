@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Sicheng Chen" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>设置</title>
+    <link href="{% static 'styles/settings.css' %}" rel="stylesheet">
+    <script src="{% static 'scripts/settings.js' %}"></script>
+</head>
+
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a href="{% url 'Relabel_Detection:main' %}">主页</a></li>
+                <li><a href="{% url 'Relabel_Detection:live' %}">实时</a></li>
+                <li><a href="{% url 'Relabel_Detection:history' %}">历史</a></li>
+                <li><a>设置</a></li>
+                <li>
+                    <form action="{% url 'Relabel_Detection:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="logout" type="submit">登出</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <th colspan="6">实时监测</th>
+                    <th colspan="6">模型</th>
+                    <th colspan="6">自动更新</th>
+                </tr>
+                <!-- 1 -->
+                <tr>
+                    <!-- detection -->
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.alarm.label_tag }}
+                            {{ form.alarm }}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.save_video.label_tag }}
+                            {{ form.save_video }}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.show_inference.label_tag }}
+                            {{ form.show_inference }}
+                        </div>
+                    </td>
+                    <!-- model -->
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.difference.label_tag }}
+                            {{ form.difference }}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.conf.label_tag }}
+                            {{ form.conf }}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.iou.label_tag }}
+                            {{ form.iou }}
+                        </div>
+                    </td>
+                    <!-- auto update -->
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.auto_label.label_tag }}
+                            {{ form.auto_label }}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.auto_train.label_tag }}
+                            {{ form.auto_train }}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                        </div>
+                    </td>
+                </tr>
+                <!-- 2 -->
+                <tr>
+                    <!-- detection -->
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.port.label_tag }}
+                            {{ form.port}}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.camera_index.label_tag }}
+                            {{ form.camera_index }}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="content">
+                            {{ form.inference_interval.label_tag }}
+                            {{ form.inference_interval }}
+                        </div>
+                    </td>
+                    <!-- model -->
+                    <td colspan="3">
+                        <div class="content">
+                            {{ form.model_input.label_tag }}
+                            {{ form.model_input }}
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div class="content">
+                            {{ form.train_epoch.label_tag }}
+                            {{ form.train_epoch }}
+                        </div>
+                    </td>
+                    <!-- auto update -->
+                    <td colspan="3">
+                        <div class="content">
+                            {{ form.auto_label_time.label_tag }}
+                            {{ form.auto_label_time }}
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div class="content">
+                            {{ form.auto_train_time.label_tag }}
+                            {{ form.auto_train_time }}
+                        </div>
+                    </td>
+                </tr>
+                <!-- 3 -->
+                <tr>
+                    <!-- detection -->
+                    <td colspan="3">
+                        <div class="content">
+                            {{ form.video_width.label_tag }}
+                            {{ form.video_width }}
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div class="content">
+                            {{ form.video_height.label_tag }}
+                            {{ form.video_height }}
+                        </div>
+                    </td>
+                    <!-- model -->
+                    <td colspan="6">
+                        <div class="content">
+                            {{ form.pt_weight_path.label_tag }}
+                            {{ form.pt_weight_path }}
+                        </div>
+                    </td>
+                    <!-- auto update -->
+                    <td colspan="6">
+                        <div class="content">
+                            {{ form.sender_email.label_tag }}
+                            {{ form.sender_email }}
+                        </div>
+                    </td>
+                </tr>
+                <!-- 4 -->
+                <tr>
+                    <!-- detection -->
+                    <td colspan="3">
+                        <div class="content">
+                            {{ form.chances.label_tag }}
+                            {{ form.chances }}
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div class="content">
+                            {{ form.failed_time.label_tag }}
+                            {{ form.failed_time }}
+                        </div>
+                    </td>
+                    <!-- model -->
+                    <td colspan="6">
+                        <div class="content">
+                            {{ form.onnx_weight_path.label_tag }}
+                            {{ form.onnx_weight_path }}
+                        </div>
+                    </td>
+                    <!-- auto update -->
+                    <td colspan="6">
+                        <div class="content">
+                            {{ form.receiver_email.label_tag }}
+                            {{ form.receiver_email }}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="operation">
+                <button class="green" type="button" onclick="SendOperation('default')">恢复默认设置</button>
+                <button class="green" type="button" onclick="ShowConfirmWindow()">保存设置</button>
+                <button class="green" type="button" onclick="SendOperation('restore')">恢复上次设置</button>
+            </div>
+
+            <div class="operation">
+                <button class="orange" type="button" onclick="SendOperation('auto_label')">立即自动标注</button>
+                <button class="orange" type="button" onclick="SendOperation('manual_label')">人工标注</button>
+                <button class="orange" type="button" onclick="SendOperation('auto_train')">立即自动训练</button>
+            </div>
+
+            <div class="operation">
+                <button class="red" type="button" onclick="SendOperation('non_still_detection')">画面动静检测</button>
+                <button class="red" type="button" onclick="SendOperation('product_model_detection')">产品检测</button>
+                <button class="red" type="button" onclick="SendOperation('operation_detection')">工人操作检测</button>
+            </div>
+
+            <div id="confirm-window">
+                <p>是否确定修改设置？</p>
+                <button class="confirm" type="submit" onclick="HideConfirmWindow()">确认</button>
+                <button class="cancel" type="button" onclick="HideConfirmWindow()">取消</button>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

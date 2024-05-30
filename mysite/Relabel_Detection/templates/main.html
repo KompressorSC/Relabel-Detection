@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Sicheng Chen" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>主页</title>
+    <link href="{% static 'styles/main.css' %}" rel="stylesheet">
+    <script src="{% static 'scripts/main.js' %}"></script>
+</head>
+
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a>主页</a></li>
+                <li><a href="{% url 'Relabel_Detection:live' %}">实时</a></li>
+                <li><a href="{% url 'Relabel_Detection:history' %}">历史</a></li>
+                <li><a href="{% url 'Relabel_Detection:settings' %}">设置</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                    <form action="{% url 'Relabel_Detection:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="logout" type="submit">登出</button>
+                    </form>
+                    {% else %}
+                    <form action="{% url 'Relabel_Detection:login' %}" method="post">
+                        {% csrf_token %}
+                        <button class="login" type="submit">登录</button>
+                    </form>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <video controls autoplay id="VID" muted>
+            <source src={{MEDIA_URL}}{{video}} type="video/mp4">
+        </video>
+        <div id="interact">
+            <p>若对系统检测结果有异议, 请查看视频并在有问题处点击截图键:</p>
+            <button class="capture" onclick="capture()">截图</button>
+            <img id="screenshot">
+            <button class="delete" onclick="delete_capture()">删除</button>
+            <p>操作完成后请点击右上角的X关闭页面</p>
+        </div>
+    </main>
+</body>
+
+</html>

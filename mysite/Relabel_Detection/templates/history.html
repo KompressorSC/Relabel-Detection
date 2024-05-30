@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Sicheng Chen" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>历史记录</title>
+    <link href="{% static 'styles/history.css' %}" rel="stylesheet">
+    <script src="{% static 'scripts/history.js' %}"></script>
+</head>
+
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a href="{% url 'Relabel_Detection:main' %}">主页</a></li>
+                <li><a href="{% url 'Relabel_Detection:live' %}">实时</a></li>
+                <li><a>历史</a></li>
+                <li><a href="{% url 'Relabel_Detection:settings' %}">设置</a></li>
+                <li>
+                    <form action="{% url 'Relabel_Detection:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="logout" type="submit">登出</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="tablink">
+            <ul>
+                <li><a onclick="showTab('ImageHistory')">图片历史记录</a></li>
+                <li><a onclick="showTab('VideoHistory')">视频历史记录</a></li>
+                <li><a onclick="showTab('ModelHistory')">模型历史记录</a></li>
+                <li><a onclick="showTab('DetectionHistory')">检测历史记录</a></li>
+                <li><a onclick="showTab('LabelHistory')">人工标注历史记录</a></li>
+                <li><a onclick="showTab('ConfigHistory')">配置文件历史记录</a></li>
+            </ul>
+        </div>
+
+        <div id="ImageHistory" class="tab">
+            <table>
+                <tr>
+                    <th colspan="5">图片历史记录</th>
+                </tr>
+                <tr>
+                    <th>保存日期</th>
+                    <th>保存位置</th>
+                    <th>是否已标注</th>
+                    <th>是否已训练</th>
+                    <th></th>
+                </tr>
+                {% for image in image_history %}
+                <tr>
+                    <td class="hidden">{{ image.id }}</td>
+                    <td>{{ image.image_date }}</td>
+                    <td>{{ image.image_path }}</td>
+                    <td>{{ image.labeled }}</td>
+                    <td>{{ image.trained }}</td>
+                    <td><button class="delete-row">删除</button>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div id="VideoHistory" class="tab">
+            <table>
+                <tr>
+                    <th colspan="3">视频历史记录</th>
+                </tr>
+                <tr>
+                    <th>保存日期</th>
+                    <th>保存位置</th>
+                    <th></th>
+                </tr>
+                {% for video in video_history %}
+                <tr>
+                    <td class="hidden">{{ video.id }}</td>
+                    <td>{{ video.video_date }}</td>
+                    <td>{{ video.video_path }}</td>
+                    <td><button class="delete-row">删除</button>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div id="ModelHistory" class="tab">
+            <table>
+                <tr>
+                    <th colspan="3">模型历史记录</th>
+                </tr>
+                <tr>
+                    <th>训练日期</th>
+                    <th>PT格式权重保存位置</th>
+                    <th></th>
+                </tr>
+                {% for model in model_history %}
+                <tr>
+                    <td class="hidden">{{ model.id }}</td>
+                    <td>{{ model.model_date }}</td>
+                    <td>{{ model.pt_path }}</td>
+                    <td><button class="delete-row">删除</button>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div id="DetectionHistory" class="tab">
+            <table>
+                <tr>
+                    <th colspan="6">检测历史记录</th>
+                </tr>
+                <tr>
+                    <th>检测日期</th>
+                    <th>产品型号</th>
+                    <th>放干燥剂</th>
+                    <th>检查密封</th>
+                    <th>粘贴胶带</th>
+                    <th></th>
+                </tr>
+                {% for detection in detection_history %}
+                <tr>
+                    <td class="hidden">{{ detection.id }}</td>
+                    <td>{{ detection.start_date }}</td>
+                    <td>{{ detection.product_model }}</td>
+                    <td>{{ detection.place }}</td>
+                    <td>{{ detection.check_MBB }}</td>
+                    <td>{{ detection.tape }}</td>
+                    <td><button class="delete-row">删除</button>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div id="LabelHistory" class="tab">
+            <table>
+                <tr>
+                    <th colspan="3">人工标注历史记录</th>
+                </tr>
+                <tr>
+                    <th>标注日期</th>
+                    <th>标注数量</th>
+                    <th></th>
+                </tr>
+                {% for label in label_history %}
+                <tr>
+                    <td class="hidden">{{ label.id }}</td>
+                    <td>{{ label.label_date }}</td>
+                    <td>{{ label.label_images}}</td>
+                    <td><button class="delete-row">删除</button>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div id="ConfigHistory" class="tab">
+            <table>
+                <tr>
+                    <th colspan="3">配置文件历史记录</th>
+                </tr>
+                <tr>
+                    <th>修改日期</th>
+                    <th>修改内容</th>
+                    <th></th>
+                </tr>
+                {% for config in config_history %}
+                <tr>
+                    <td class="hidden">{{ config.id }}</td>
+                    <td>{{ config.change_time }}</td>
+                    <td>{{ config.changes }}</td>
+                    <td><button class="delete-row">删除</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <script>
+            showTab("ConfigHistory");
+            DELETE_HISTORY();
+        </script>
+    </main>
+</body>
+
+</html>
